@@ -1,6 +1,6 @@
 import json
 
-from flask import Flask, jsonify
+from flask import Flask
 from flask_restful import Api, Resource
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -12,14 +12,13 @@ api = Api(app)
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
-import models
 from parser import Parser
 
 
 class ApiParser(Resource):
 
     @staticmethod
-    def get_json(company):
+    def get(company):
         parser = Parser()
         result = parser.parse(company)
         json_file = json.dumps(result, indent=1)
@@ -29,4 +28,4 @@ class ApiParser(Resource):
 api.add_resource(ApiParser, '/<string:company>')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()

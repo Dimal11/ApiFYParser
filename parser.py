@@ -4,11 +4,10 @@ import time
 import json
 import pandas as pd
 import d6tstack.utils
-from rest_api import db
-from config import Config, get_path_to_data_folder
+from config import Config
 import psycopg2
 from psycopg2 import Error
-from models import DataBase
+
 
 
 class Parser:
@@ -70,7 +69,7 @@ class Parser:
 
     """ Как определить максимальный период запрашиваемых данных на вкладке 'Historical Data' я не знаю. 
     По этому для успешной реализации приложения я скопировал путь к ссылке
-    'Download' и с помощью меток времени установил коректный макс промежуток"""
+    'Download' и с помощью меток времени установил корректный макс промежуток"""
 
     def get_download_url(self,
                          period_2=CURRENT_TIME, interval='1d',
@@ -121,9 +120,6 @@ class Parser:
                 cursor.close()
                 connection.close()
 
-        # with open(f'{company}.json', 'w') as file:
-        #     file_result = json.dump(json_file, file, indent=2)
-
         return data_list
 
     def parse(self, company):
@@ -137,5 +133,3 @@ class Parser:
             print('Error')
         return json_file
 
-# parser = Parser()
-# parser.get_json_from_db(company='ZUO')
